@@ -1,13 +1,17 @@
 <template>
-    
+    <header class="main-header">
+        <h1>VueTodo</h1>
+    </header>
 </template>
 
-<script>
-    export default {
-        name: "header.vue"
+<style lang="stylus" scoped>
+.main-header{
+    text-align center
+    h1{
+        font-size 100px
+        color: lightgreen
+        font-weight: 100
+        margin 20px
     }
-</script>
-
-<style scoped>
-
+}
 </style>
