@@ -9,11 +9,16 @@
         >
         <Item
                 :todo="todo"
-                v-for="todo in todos"
+                v-for="todo in filteredTodos"
                 :key="todo.id"
                 @del="deleteTodo"
         />
-        <Tabs :filter="filter"></Tabs>
+        <Tabs
+                :filter="filter"
+                :todos="todos"
+                @toggle="toggle"
+                @clearAll="clearAll"
+        />
     </section>
 </template>
 
@@ -26,12 +31,21 @@
         data(){
           return{
               todos:[],
-              filter: 'all'
+              filter:"all",
           }
         },
         components:{
             Item,
             Tabs,
+        },
+        computed:{
+            filteredTodos(){
+                if (this.filter === 'all'){
+                    return this.todos
+                }
+                const  completed = this.filter === 'completed'
+                return this.todos.filter(todo => completed === todo.completed)
+            }
         },
         methods:{
             addTodo(e) {
@@ -44,6 +58,12 @@
             },
             deleteTodo(id){
                 this.todos.splice(this.todos.findIndex(todo => todo.id === id ), 1)
+            },
+            toggle(state){
+                this.filter = state
+            },
+            clearAll(){
+                this.todos = this.todos.filter(todo => !todo.completed)
             }
         }
     }
